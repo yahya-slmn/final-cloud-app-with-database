@@ -50,6 +50,35 @@
                     </div>
                 {% endfor %}
             </div>
+
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#exam" aria-expanded="false" aria-controls="exam">
+                Show Exam
+            </button>
+
+            <div class="collapse mt-3" id="exam">
+                <form method="post" >
+                  {% csrf_token %}
+                  {% for question in course.questions.all %}
+                    <div class="card my-3">
+                      <div class="card-header">
+                        <h3 class="card-title">{{ question.text }}</h3>
+                      </div>
+                      <div class="card-body">
+                        {% for choice in question.choices.all %}
+                          <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="selected_choices" value="{{ choice.id }}">
+                            <label class="form-check-label">{{ choice.text }}</label>
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  {% endfor %}
+                  <button class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+
+
+
             <!-- Task: show questions and choices -->
             <!-- <HINT> Use Bootstrap Collapse to hide exam first, more details could be found here
             https://www.w3schools.com/bootstrap4/bootstrap_collapse.asp-->

@@ -113,7 +113,6 @@ def enroll(request, course_id):
 def submit(request, course_id):
     if request.method == 'POST':
         user = request.user
-        course_id = request.POST.get('course_id')
         course_obj = Course.objects.get(id=course_id)
 
         enrollement = Enrollment.objects.get(user=user, course=course_obj)
@@ -128,7 +127,7 @@ def submit(request, course_id):
 
         submission.choices.set(selected_choices)
 
-        return redirect('show_exam_result', submission_id=submission.id)
+        return redirect('submit_exam', submission_id=submission.id)
 
     else:
         # handle GET request for exam form
@@ -143,6 +142,7 @@ def submit(request, course_id):
 #            value = request.POST[key]
 #            choice_id = int(value)
 #            submitted_anwsers.append(choice_id)
+
 #    return submitted_anwsers
 
 
@@ -177,7 +177,7 @@ def show_exam_result(request, course_id, submission_id):
         'pass_status': pass_status,
     }
     
-    return render(request, 'show_exam_result.html', context)
+    return render(request, 'exam_result_bootstrap.html', context)
 
 
 
